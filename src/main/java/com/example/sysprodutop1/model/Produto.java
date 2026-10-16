@@ -2,10 +2,11 @@ package com.example.sysprodutop1.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Produto {
-    private String codigo;
+    private final String codigo;
     private String nome;
     private String descricao;
     private LocalDate dataFabricacao;
@@ -18,26 +19,29 @@ public class Produto {
     //CONSTRUTORES
     /*public Produto() {
     }*/
-
-    public Produto(String codigo, String nome, String descricao, LocalDate dataFabricacao, LocalDate dataValidade, BigDecimal precoCompra, BigDecimal precoVenda, int quantidadeEstoque, Categoria categoria) {
-        this.codigo = UUID.randomUUID().toString();
-        this.nome = nome;
-        this.descricao = descricao;
-        this.dataFabricacao = dataFabricacao;
-        this.dataValidade = dataValidade;
-        this.precoCompra = precoCompra;
-        this.precoVenda = precoVenda;
-        this.quantidadeEstoque = quantidadeEstoque;
-        this.categoria = categoria;
+//UUID automatico
+    public Produto(String nome, String descricao, LocalDate dataFabricacao, LocalDate dataValidade,
+                   BigDecimal precoCompra, BigDecimal precoVenda, int quantidadeEstoque, Categoria categoria) {
+    this (UUID.randomUUID().toString(), nome, descricao, dataFabricacao, dataValidade, precoCompra, precoVenda,
+            quantidadeEstoque, categoria);
     }
 
-    //GETTERS AND SETTERS
+//guarda o que ja recebeu
+    public Produto(String codigo, String nome, String descricao, LocalDate dataFabricacao, LocalDate dataValidade,
+                   BigDecimal precoCompra, BigDecimal precoVenda, int quantidadeEstoque, Categoria categoria){
+        this.codigo            = Objects.requireNonNull(codigo, "codigo");
+        this.nome              = Objects.requireNonNull(nome, "nome");
+        this.descricao         = descricao;
+        this.dataFabricacao    = dataFabricacao;
+        this.dataValidade      = dataValidade;
+        this.precoCompra       = precoCompra;
+        this.precoVenda        = precoVenda;
+        this.quantidadeEstoque = quantidadeEstoque;
+        this.categoria         = Objects.requireNonNull(categoria, "categoria");
+    }
+
     public String getCodigo() {
         return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
     }
 
     public String getNome() {
@@ -101,7 +105,20 @@ public class Produto {
     }
 
     public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+        this.categoria = Objects.requireNonNull(categoria, "Categoria");
+    }
+    @Override
+    public boolean equals(Object o) {
+        return (o instanceof Produto p) && codigo.equals(p.codigo);
+    }
+
+    @Override
+    public int hashCode() { return codigo.hashCode(); }
+
+    @Override
+    public String toString() {
+        return "Produto{codigo='%s', nome='%s', categoria=%s}"
+                .formatted(codigo, nome, categoria.getNome());
     }
 }
 

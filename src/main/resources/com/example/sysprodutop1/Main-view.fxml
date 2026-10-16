@@ -1,16 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.sysprodutop1.HelloController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.sysprodutop1.MainController">
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+    <top>
+        <Label text="Sistema de Produtos" style="-fx-font-size: 18px; -fx-font-weight: bold;">
+            <BorderPane.margin><Insets top="10" left="10"/></BorderPane.margin>
+        </Label>
+    </top>
+
+    <center>
+        <HBox spacing="10">
+            <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+            <VBox spacing="6" prefWidth="290">
+                <Label text="Produto" style="-fx-font-weight: bold;"/>
+                <TextField fx:id="tfCodigo"      promptText="Código (8+ alfanum.)"/>
+                <TextField fx:id="tfNome"        promptText="Nome"/>
+                <TextField fx:id="tfDescricao"   promptText="Descrição"/>
+                <DatePicker fx:id="dpFabricacao" promptText="Data de fabricação"/>
+                <DatePicker fx:id="dpValidade"   promptText="Data de validade"/>
+                <TextField fx:id="tfPrecoCompra" promptText="Preço de compra"/>
+                <TextField fx:id="tfPrecoVenda"  promptText="Preço de venda"/>
+                <TextField fx:id="tfEstoque"     promptText="Quantidade em estoque"/>
+
+                <Separator/>
+                <Label text="Categoria" style="-fx-font-weight: bold;"/>
+                <TextField fx:id="tfCatId"        promptText="ID (int > 0)"/>
+                <TextField fx:id="tfCatNome"      promptText="Nome"/>
+                <TextField fx:id="tfCatDescricao" promptText="Descrição"/>
+                <TextField fx:id="tfCatSetor"     promptText="Setor"/>
+
+                <Separator/>
+                <GridPane hgap="6" vgap="6">
+                    <Button text="Cadastrar" onAction="#onCadastrar" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                    <Button text="Excluir"   onAction="#onExcluir"   GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                    <Button text="Buscar"    onAction="#onBuscar"    GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                    <Button text="Limpar"    onAction="#onLimpar"    GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                </GridPane>
+            </VBox>
+
+            <VBox spacing="6" HBox.hgrow="ALWAYS">
+                <TableView fx:id="tabela" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colCodigo"    text="Código"    prefWidth="130"/>
+                        <TableColumn fx:id="colNome"      text="Nome"      prefWidth="150"/>
+                        <TableColumn fx:id="colCategoria" text="Categoria" prefWidth="120"/>
+                        <TableColumn fx:id="colSetor"     text="Setor"     prefWidth="100"/>
+                        <TableColumn fx:id="colFab"       text="Fabricação" prefWidth="100"/>
+                        <TableColumn fx:id="colVal"       text="Validade"  prefWidth="100"/>
+                        <TableColumn fx:id="colCompra"    text="Compra"    prefWidth="80"/>
+                        <TableColumn fx:id="colVenda"     text="Venda"     prefWidth="80"/>
+                        <TableColumn fx:id="colEstoque"   text="Estoque"   prefWidth="70"/>
+                    </columns>
+                </TableView>
+
+                <HBox spacing="6">
+                    <Button text="Próx. vencimento (60d)" onAction="#onRelVencimento"/>
+                    <Button text="Estoque baixo (&lt;10)" onAction="#onRelEstoque"/>
+                    <Button text="Margem média/categoria" onAction="#onRelMargem"/>
+                    <Button text="Agrupar por setor"      onAction="#onRelSetor"/>
+                    <Button text="Mostrar todos"          onAction="#onMostrarTodos"/>
+                </HBox>
+            </VBox>
+        </HBox>
+    </center>
+</BorderPane>
