@@ -85,10 +85,31 @@ public class MainController {
     }
 
     @FXML private void onBuscar() {
-        Produto p = service.buscarPorCodigo(tfCodigo.getText().trim());
-        if (p == null) { mostrarErro("Buscar", "Nenhum produto com esse código."); return; }
-        preencherForm(p);
-        atualizarTabela(List.of(p));
+        String codigo = tfCodigo.getText().trim();
+        String nome = tfNome.getText().trim();
+
+        if (!codigo.isEmpty()){
+            Produto p = service.buscarPorCodigo(codigo);
+            if (p == null){
+                mostrarErro("Buscar", "Nenhum produto com este código!");
+                atualizarTabela(List.of());
+            } else {
+                preencherForm(p);
+                atualizarTabela(List.of(p));
+            }
+            return;
+        }
+        if (!nome.isEmpty()){
+            List<Produto> resultados = service.buscarPorNome(nome);
+            if (resultados.isEmpty()){
+                mostrarErro("Buscar", "Nenhum produto com este nome!");
+            } else if (resultados.size() == 1){
+                preencherForm(resultados.get(0));
+            }
+            atualizarTabela(resultados);
+            return;
+        }
+        mostrarErro("Buscar", "Digite um codigo ou um nome no formulario para buscar o produto");
     }
 
     @FXML private void onLimpar() {

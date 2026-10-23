@@ -46,6 +46,15 @@ public class produtoService {
                 .findFirst()
                 .orElse(null);
     }
+    public List<Produto> buscarPorNome(String termo){
+        if (termo == null || termo.isBlank()){
+            return List.of();
+        }
+        String busca = termo.toLowerCase();
+        return produtos.stream()
+                .filter(p -> p.getNome().toLowerCase().contains(busca))
+                .collect(Collectors.toList());
+    }
 
     public List<Produto> listarTodos() {
         return List.copyOf(produtos);
