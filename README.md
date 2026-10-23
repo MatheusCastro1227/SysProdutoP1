@@ -13,7 +13,7 @@ No campo Setor é recomendado usar letras e caracteres(Ex.: A1, A2)
 
 Após inserir todos os dados clique em Cadastrar e o produto será inserido na tabela ao lado.
 
-Para buscar o produto basta inserir o código registrado na tabela e clicar em buscar.
+Para buscar o produto basta inserir o código ou o nome do produto registrado na tabela e clicar em buscar.
 
 Para excluir basta clicar no produto na tabela e depois em excluir.
 
